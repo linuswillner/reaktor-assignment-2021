@@ -1,17 +1,37 @@
 <script>
-	let name = 'world'
+  import keymage from 'keymage'
+  import Nav from './components/Nav.svelte'
+  import doArrayRoundTrip from './utils/doArrayRoundTrip'
+
+  const views = [
+    'Gloves',
+    'Facemasks',
+    'Beanies'
+  ]
+
+  let currentView = views[0]
+
+  function scrollActiveView (direction) {
+    let newViewIndex = doArrayRoundTrip(direction, views.indexOf(currentView), views)
+    currentView = views[newViewIndex]
+  }
+
+  keymage('ctrl-left', () => scrollActiveView('left'))
+  keymage('ctrl-right', () => scrollActiveView('right'))
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
+	<h1>Warehouse Stock Index</h1>
+  <Nav views="{views}" currentView="{currentView}"/>
 </main>
 
 <style>
   main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     text-align: center;
     padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
   }
 
   h1 {
@@ -19,11 +39,6 @@
     text-transform: uppercase;
     font-size: 4em;
     font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
+    margin-top: 0;
   }
 </style>
