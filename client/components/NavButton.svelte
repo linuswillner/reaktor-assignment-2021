@@ -1,9 +1,20 @@
 <script>
-  export let title;
-  export let active;
+  import { createEventDispatcher } from 'svelte'
+
+  export let title
+  export let active
+
+  const dispatch = createEventDispatcher()
+
+  function dispatchSetView () {
+    dispatch('setView', { view: title })
+  }
 </script>
 
-<button class:active="{active}">
+<button
+  class:active={active}
+  on:click={dispatchSetView}
+>
   {title}
 </button>
 

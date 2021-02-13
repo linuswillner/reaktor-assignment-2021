@@ -11,18 +11,22 @@
 
   let currentView = views[0]
 
-  function scrollActiveView (direction) {
-    let newViewIndex = doArrayRoundTrip(direction, views.indexOf(currentView), views)
+  function scrollCurrentView (direction) {
+    const newViewIndex = doArrayRoundTrip(direction, views.indexOf(currentView), views)
     currentView = views[newViewIndex]
   }
 
-  keymage('ctrl-left', () => scrollActiveView('left'))
-  keymage('ctrl-right', () => scrollActiveView('right'))
+  function setCurrentView (event) {
+    currentView = event.detail.view
+  }
+
+  keymage('ctrl-left', () => scrollCurrentView('left'))
+  keymage('ctrl-right', () => scrollCurrentView('right'))
 </script>
 
 <main>
 	<h1>Warehouse Stock Index</h1>
-  <Nav views="{views}" currentView="{currentView}"/>
+  <Nav views={views} currentView={currentView} on:setView={setCurrentView}/>
 </main>
 
 <style>
