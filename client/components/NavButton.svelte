@@ -26,6 +26,6 @@
   }
 
   .active {
-    color: #ff3e00;
+    color: var(--color-primary);
   }
 </style>

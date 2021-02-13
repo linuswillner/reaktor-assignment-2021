@@ -1,7 +1,12 @@
 <script>
   import keymage from 'keymage'
+  import Gloves from './views/Gloves.svelte'
+  import Facemasks from './views/Facemasks.svelte'
+  import Beanies from './views/Beanies.svelte'
   import Nav from './components/Nav.svelte'
   import doArrayRoundTrip from './utils/doArrayRoundTrip'
+
+  import './styles/main.css'
 
   const views = [
     'Gloves',
@@ -39,7 +44,7 @@
   }
 
   h1 {
-    color: #ff3e00;
+    color: var(--color-primary);
     text-transform: uppercase;
     font-size: 4em;
     font-weight: 100;
