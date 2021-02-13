@@ -5,7 +5,6 @@
   export let currentView
 </script>
 
-<h2>Departments</h2>
 <p>Tip: Use <code>Ctrl</code> and the left/right arrow keys to cycle between departments.</p>
 <nav>
   {#each views as buttonTitle}
@@ -18,11 +17,6 @@
 </nav>
 
 <style>
-  h2 {
-    margin: 0;
-    margin-bottom: 0.5em;
-  }
-
   p {
     font-style: italic;
     margin: 0;

@@ -1,0 +1,62 @@
+<script>
+  export let id
+  export let name
+  export let colors
+  export let price
+  export let manufacturer
+  export let isInStock
+
+  function getStockStatus () {
+    return isInStock ? 'Yes' : 'No'
+  }
+
+  function getStockStatusClass () {
+    return isInStock ? 'in-stock' : 'out-of-stock'
+  }
+</script>
+
+<div class="item">
+  <p>ID: <code>{id}</code></p>
+  <p>Name: {name}</p>
+  <p>
+    Color:
+    {#each colors as color}
+      <span class="badge color {color}">{color}</span>
+    {/each}
+  </p>
+  <p>Price: {price}</p>
+  <p>Manufacturer: {manufacturer}</p>
+  <p>In stock: <span class="badge {getStockStatusClass()}">{getStockStatus()}</span></p>
+</div>
+
+<style>
+  div {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-secondary);
+    padding: 0.5em;
+    margin: 0.5em;
+    text-align: left;
+    border-radius: 0.3em;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  span {
+    color: #ffffff;
+  }
+
+  span.in-stock {
+    background-color: #00be00;
+  }
+
+  span.out-of-stock {
+    background-color: #ff0000;
+  }
+
+  .badge.color:not(:last-child) {
+    margin-right: 0.3em;
+  }
+</style>

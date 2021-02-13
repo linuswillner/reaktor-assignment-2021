@@ -2,3 +2,43 @@
   --color-primary: #ff3e00;
   --color-secondary: #333;
 }
+
+.badge {
+  border-radius: 0.3em;
+  padding: 0 0.3em 0 0.3em;
+  border: 1px solid var(--color-secondary);
+}
+
+.color.black {
+  background-color: #000000;
+}
+
+.color.purple {
+  background-color: #b700ff;
+}
+
+.color.yellow {
+  color: #000000;
+  background-color: #fffb00;
+}
+
+.color.white {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.color.red {
+  background-color: #ff0000;
+}
+
+.color.blue {
+  background-color: #009bd8;
+}
+
+.color.green {
+  background-color: #00be00;
+}
+
+.color.grey {
+  background-color: #969696;
+}
