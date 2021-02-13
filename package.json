@@ -6,7 +6,7 @@
     "dev": "rollup -c -w",
     "start": "sirv public",
     "start:server": "node server/index.js",
-    "test": "eslint ."
+    "test": "eslint . --ext .js,.svelte"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
