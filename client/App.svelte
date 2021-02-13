@@ -5,7 +5,7 @@
   import Nav from './components/Nav.svelte'
   import doArrayRoundTrip from './utils/doArrayRoundTrip'
 
-  import './styles/main.css'
+  import './index.css'
 
   const dispatch = createEventDispatcher()
 
