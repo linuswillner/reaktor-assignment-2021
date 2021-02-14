@@ -1,3 +1,4 @@
 module.exports = categoryData => {
-  return categoryData.map(item => delete item.type)
+  categoryData.forEach(item => delete item.type)
+  return categoryData
 }

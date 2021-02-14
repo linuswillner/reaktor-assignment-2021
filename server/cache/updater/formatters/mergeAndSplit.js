@@ -1,7 +1,7 @@
 exports.merge = allCategories => {
   const allItems = []
   allCategories.forEach(itemsInCategory => allItems.push(itemsInCategory))
-  return allItems
+  return allItems.flat()
 }
 
 exports.split = allItems => {

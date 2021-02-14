@@ -8,7 +8,7 @@ exports.getCategory = async category => {
 
     // Compensate for failure case where API returns empty data
     if (!response) {
-      attempts = attempts++
+      attempts = ++attempts
       logger.error(`Fetching of ${category} failed (empty response) for attempt ${attempts}. Retrying...`)
       return fetchUntilSuccess()
     }
@@ -27,7 +27,7 @@ exports.getAvailability = async manufacturer => {
 
     // Compensate for failure case where API returns { "code": 200, "response": "[]" }
     if (!Array.isArray(response?.response)) {
-      attempts = attempts++
+      attempts = ++attempts
       logger.error(`Fetching of ${manufacturer} failed (invalid data in response field) for attempt ${attempts}. Retrying...`)
       return fetchUntilSuccess()
     }

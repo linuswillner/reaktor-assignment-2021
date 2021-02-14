@@ -4,70 +4,38 @@
 
   export let currentView
 
-  const socket = io()
-
-  socket.on('data', items => {
-    console.log(items)
-  })
-
-  // Defying convention for 'no capitalised object props'
+  // Defying the convention of 'no capitalised object props'
   // for the sake of interoperability with currentView here
   const items = {
-    Gloves: [
-      {
-        id: '6ab1fdb1a5630a1ac616c0c',
-        name: 'NYIL JUMP',
-        colors: ['red', 'green'],
-        price: 51,
-        manufacturer: 'abiplos',
-        isInStock: true
-      },
-      {
-        id: '6ab1fdb1a5630a1ac616c0c',
-        name: 'NYIL JUMP',
-        colors: ['black'],
-        price: 51,
-        manufacturer: 'abiplos',
-        isInStock: false
-      }
-    ],
-    Facemasks: [
-      {
-        id: '6ab1fdb1a5630a1ac616c0c',
-        name: 'NYIL JUMP',
-        colors: ['blue'],
-        price: 51,
-        manufacturer: 'abiplos',
-        isInStock: true
-      },
-      {
-        id: '6ab1fdb1a5630a1ac616c0c',
-        name: 'NYIL JUMP',
-        colors: ['green'],
-        price: 51,
-        manufacturer: 'abiplos',
-        isInStock: false
-      }
-    ],
-    Beanies: [
-      {
-        id: '6ab1fdb1a5630a1ac616c0c',
-        name: 'NYIL JUMP',
-        colors: ['white'],
-        price: 51,
-        manufacturer: 'abiplos',
-        isInStock: true
-      },
-      {
-        id: '6ab1fdb1a5630a1ac616c0c',
-        name: 'NYIL JUMP',
-        colors: ['yellow'],
-        price: 51,
-        manufacturer: 'abiplos',
-        isInStock: false
-      }
-    ]
+    Gloves: [],
+    Facemasks: [],
+    Beanies: []
   }
+
+  const cacheToViewMap = {
+    gloves: 'Gloves',
+    facemasks: 'Facemasks',
+    beanies: 'Beanies'
+  }
+
+  const socket = io()
+
+  socket.on('connect', () => {
+    console.debug('WebSocket connection established.')
+  })
+
+  socket.on('data', newData => {
+    console.debug('Received new data.')
+
+    for (const category in newData) {
+      items[cacheToViewMap[category]] = newData[category]
+    }
+  })
+
+  socket.on('data_partial', ({ category, data }) => {
+    console.debug('Received partial new data via cache update.')
+    items[cacheToViewMap[category]] = data
+  })
 </script>
 
 <div>

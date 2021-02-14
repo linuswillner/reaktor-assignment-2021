@@ -10,13 +10,10 @@ const cache = new Cache({
 })
 
 // Trigger update on first load
-updateCache()
+updateCache(cache)
 
 cache.on('set', (key, value) => {
-  dispatcher.emit('cache_update_available', {
-    category: key,
-    data: getAll()
-  })
+  dispatcher.emit('cache_update_available', { category: key, data: value })
 })
 
 cache.on('expired', () => {
@@ -25,12 +22,16 @@ cache.on('expired', () => {
 })
 
 function getAll () {
+  const gloves = cache.get('gloves')
+  const facemasks = cache.get('facemasks')
+  const beanies = cache.get('beanies')
+
   // Strip the types in case the formatter hasn't gotten
   // availability data yet and they're still there
   return {
-    gloves: stripTypes(cache.get('gloves')) || [],
-    facemasks: stripTypes(cache.get('facemasks')) || [],
-    beanies: stripTypes(cache.get('beanies')) || []
+    gloves: gloves ? stripTypes(gloves) : [],
+    facemasks: facemasks ? stripTypes(facemasks) : [],
+    beanies: beanies ? stripTypes(beanies) : []
   }
 }
 

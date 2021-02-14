@@ -6,7 +6,7 @@
   export let manufacturer
   export let isInStock
 
-  function getStockStatus () {
+  function getStockStatus (isInStock) {
     switch (isInStock) {
       case true:
         return 'Yes'
@@ -19,7 +19,7 @@
     }
   }
 
-  function getStockStatusClass () {
+  function getStockStatusClass (isInStock) {
     switch (isInStock) {
       case true:
         return 'in-stock'
@@ -31,6 +31,9 @@
         return 'unknown-stock'
     }
   }
+
+  $: stockStatus = getStockStatus(isInStock)
+  $: stockStatusClass = getStockStatusClass(isInStock)
 </script>
 
 <div class="item">
@@ -44,7 +47,7 @@
   </p>
   <p>Price: {price}</p>
   <p>Manufacturer: {manufacturer}</p>
-  <p>In stock: <span class="badge {getStockStatusClass()}">{getStockStatus()}</span></p>
+  <p>In stock: <span class="badge {stockStatusClass}">{stockStatus}</span></p>
 </div>
 
 <style>

@@ -2,7 +2,6 @@ const dispatcher = require('../../utils/dispatcher')
 const { getCategory, getAvailability } = require('./fetchTools')
 const formatCategoryData = require('./formatters/category')
 const formatAvailability = require('./formatters/availability')
-const stripTypes = require('./formatters/stripTypes')
 const mergeAndSplit = require('./formatters/mergeAndSplit')
 const interspliceAvailability = require('./formatters/intersplice')
 
@@ -14,14 +13,14 @@ module.exports = async cache => {
 
   const manufacturers = []
 
-  for (const category in ['gloves', 'facemasks', 'beanies']) {
+  for (const category of ['gloves', 'facemasks', 'beanies']) {
     logger.debug(`Fetching item data for category ${category}.`)
 
     let response
 
     // Catch any errors that might bubble up from node-fetch
     try {
-      response = await getCategory(category)
+      response = await getCategory(`/products/${category}`)
     } catch (err) {
       logger.error(`Error when fetching item data for category ${category}: ${err.stack}`)
       dispatcher.emit('cache_update_error', err)
@@ -47,14 +46,14 @@ module.exports = async cache => {
 
   // Next, let's index item availability for all manufacturers
 
-  for (const manufacturer in manufacturers) {
+  for (const manufacturer of manufacturers) {
     logger.debug(`Fetching availability data for manufacturer ${manufacturer}.`)
 
     let response
 
     // Catch any errors that might bubble up from node-fetch
     try {
-      response = await getAvailability(manufacturer)
+      response = await getAvailability(`/availability/${manufacturer}`)
     } catch (err) {
       logger.error(`Error when fetching availability data for manufacturer ${manufacturer}: ${err.stack}`)
       dispatcher.emit('cache_update_error', err)
@@ -77,9 +76,7 @@ module.exports = async cache => {
     logger.debug(`Formatting availability data for manufacturer ${manufacturer} succeeded. Writing to cache.`)
 
     for (const category in parsed) {
-      // Strip the types now, we don't need them anymore
-      const itemsInCategory = stripTypes(parsed[category])
-      cache.set(category, itemsInCategory)
+      cache.set(category, parsed[category])
     }
 
     logger.debug(`Cache write of availability data for manufacturer ${manufacturer} succeeded.`)
