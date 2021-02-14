@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte'
+  import { NotificationDisplay } from '@beyonk/svelte-notifications'
   import keymage from 'keymage'
   import Items from './views/Items.svelte'
   import Nav from './components/Nav.svelte'
@@ -31,6 +32,9 @@
   keymage('ctrl-right', () => scrollCurrentView('right'))
 </script>
 
+<NotificationDisplay
+  timeout={5000}
+/>
 <main>
 	<h1>Warehouse Stock Index</h1>
   <Nav

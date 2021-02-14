@@ -6,7 +6,7 @@ exports.getCategory = async category => {
   const fetchUntilSuccess = async () => {
     const response = await getJSON(category)
 
-    // Compensate for failure case where API returns empty data
+    // Compensate for failure case where API returns ""
     if (!response) {
       attempts = ++attempts
       logger.error(`Fetching of ${category} failed (empty response) for attempt ${attempts}. Retrying...`)

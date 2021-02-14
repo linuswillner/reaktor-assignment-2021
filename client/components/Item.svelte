@@ -1,4 +1,6 @@
 <script>
+  import Spinner from 'svelte-spinner'
+
   export let id
   export let name
   export let colors
@@ -27,7 +29,7 @@
         return 'out-of-stock'
       case 'low':
         return 'low-stock'
-      case 'unknown':
+      default:
         return 'unknown-stock'
     }
   }
@@ -47,7 +49,20 @@
   </p>
   <p>Price: {price}</p>
   <p>Manufacturer: {manufacturer}</p>
-  <p>In stock: <span class="badge {stockStatusClass}">{stockStatus}</span></p>
+  <p>
+    In stock: 
+    <span class="badge {stockStatusClass}">
+      {#if stockStatus === 'Unknown'}
+        <Spinner
+          size={12}
+          thickness={3}
+          color="#ff3e00"
+        />
+      {:else}
+        {stockStatus}
+      {/if}
+    </span>
+  </p>
 </div>
 
 <style>
@@ -83,7 +98,7 @@
   }
 
   span.unknown-stock {
-    background-color: #969696;
+    background-color: #f4f4f4;
   }
 
   .badge.color:not(:last-child) {
