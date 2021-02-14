@@ -6,8 +6,6 @@ module.exports = categoryData => {
 
     for (const prop in oldItem) {
       switch (prop) {
-        case 'type': // Skip redundant type prop
-          continue
         case 'color': // Rename color => colors for clarity
           newItem.colors = oldItem.color
           break
@@ -15,6 +13,9 @@ module.exports = categoryData => {
           newItem[prop] = oldItem[prop]
       }
     }
+
+    // Add provisory in stock value
+    newItem.isInStock = 'unknown'
 
     newData.push(newItem)
   }

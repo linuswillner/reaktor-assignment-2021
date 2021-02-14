@@ -21,14 +21,14 @@ module.exports = availabilityData => {
 
     for (const prop in oldItem) {
       switch (prop) {
-        case 'id':
+        case 'id': // Normalise IDs to lowercase
           newItem.id = oldItem.id.toLowerCase()
           break
-        case 'DATAPAYLOAD':
+        case 'DATAPAYLOAD': // Parse out the relevant data from the DATAPAYLOAD field
           newItem.isInStock = getStockAvailability(oldItem.DATAPAYLOAD)
           break
         // There should be no other fields, and even if there are,
-        // we don't care about them, hence discard those
+        // we don't care about them, so discard those
       }
     }
 
