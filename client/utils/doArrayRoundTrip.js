@@ -1,7 +1,7 @@
 /**
  * Utility function to return the next index of a given array,
- * starting over from the beginning should the next increment
- * exceed the array boundaries.
+ * starting over from the beginning or end, should the next
+ * increment exceed the array boundaries.
  *
  * @param {String} direction Direction to move in - has to be "left" or "right".
  * @param {Number} currentIndex Index in array from which to begin iterating.
