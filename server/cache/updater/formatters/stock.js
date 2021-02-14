@@ -1,3 +1,9 @@
+/**
+ * Parser for the DATAPAYLOAD field provided by the /availability/:manufacturer endpoint
+ *
+ * @param {String} value
+ * @returns {Boolean | String} True/false for in stock, or "low" if less than 10 items are in stock
+ */
 const getStockAvailability = value => {
   // The relevant part of the data payload is in the INSTOCKVALUE field,
   // the value of which is enclosed in the first capture group here
@@ -13,10 +19,16 @@ const getStockAvailability = value => {
   }
 }
 
-module.exports = availabilityData => {
+/**
+ * Formatter for raw data from the /availability/:manufacturer endpoint
+ *
+ * @param {Object} stockResponse Response from GET /availability/manufacturer
+ * @returns {Array<Stock>} [ { id: String, isInStock: Boolean | String }, ... ]
+ */
+module.exports = stockResponse => {
   const newData = []
 
-  for (const oldItem of availabilityData.response) {
+  for (const oldItem of stockResponse.response) {
     const newItem = {}
 
     for (const prop in oldItem) {

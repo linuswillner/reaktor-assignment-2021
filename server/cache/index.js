@@ -42,13 +42,17 @@ cache.on('expired', async () => {
   }
 })
 
+/**
+ * Get all data from the cache.
+ * @returns {Object} { gloves: Array<Item>, facemasks: Array<Item>, beanies: Array<Item> }
+ */
 function getAll () {
   const gloves = cache.get('gloves')
   const facemasks = cache.get('facemasks')
   const beanies = cache.get('beanies')
 
   // Strip the types in case the formatter hasn't gotten
-  // availability data yet and they're still there
+  // stock availability data yet and they're still there
   return {
     gloves: gloves ? stripTypes(gloves) : [],
     facemasks: facemasks ? stripTypes(facemasks) : [],

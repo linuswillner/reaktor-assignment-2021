@@ -1,10 +1,15 @@
 const dispatcher = require('../../utils/dispatcher')
 const { getCategory, getAvailability } = require('./fetchTools')
 const formatCategoryData = require('./formatters/category')
-const formatAvailability = require('./formatters/availability')
+const formatStock = require('./formatters/stock')
 const mergeAndSplit = require('./formatters/mergeAndSplit')
 const interspliceAvailability = require('./formatters/intersplice')
 
+/**
+ * Performs a cache update.
+ *
+ * @param {Cache} cache A node-cache object
+ */
 module.exports = async cache => {
   logger.debug('Performing cache refresh.')
 
@@ -62,7 +67,7 @@ module.exports = async cache => {
 
     logger.debug(`Fetching availability data for manufacturer ${manufacturer} succeeded. Formatting.`)
 
-    const formatted = formatAvailability(response)
+    const formatted = formatStock(response)
 
     // Merge all items together for availability intersplicing
     const allItems = mergeAndSplit.merge(['gloves', 'facemasks', 'beanies'].map(category => cache.get(category)))

@@ -1,7 +1,13 @@
-module.exports = categoryData => {
+/**
+ * Formatter for raw data from the /products/:category endpoint
+ *
+ * @param {Object} categoryResponse Response from GET /products/:category
+ * @returns {Array<Item>} [ { id: String, type: String, name: String, colors: Array<String>, price: Number, manufacturer: String }, ... ]
+ */
+module.exports = categoryResponse => {
   const newData = []
 
-  for (const oldItem of categoryData) {
+  for (const oldItem of categoryResponse) {
     const newItem = {}
 
     for (const prop in oldItem) {

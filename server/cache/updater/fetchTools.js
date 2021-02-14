@@ -1,5 +1,14 @@
 const getJSON = require('../../utils/getJSON')
 
+/**
+ * Perform a GET request to /products/:category.
+ *
+ * This function will indefinitely attempt to obtain correct data
+ * until it succeeds, and relies on the OS to sleep the process if
+ * it's not in use to avoid spamming the API.
+ *
+ * @param {String} category
+ */
 exports.getCategory = async category => {
   let attempts = 0
 
@@ -19,6 +28,15 @@ exports.getCategory = async category => {
   return fetchUntilSuccess()
 }
 
+/**
+ * Perform a GET request to /availability/:manufacturer.
+ *
+ * This function will indefinitely attempt to obtain correct data
+ * until it succeeds, and relies on the OS to sleep the process if
+ * it's not in use to avoid spamming the API.
+ *
+ * @param {String} manufacturer
+ */
 exports.getAvailability = async manufacturer => {
   let attempts = 0
 
