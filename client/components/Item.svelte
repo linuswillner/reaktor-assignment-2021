@@ -13,7 +13,7 @@
       case false:
         return 'No'
       case 'low':
-        return 'Less than 10'
+        return '< 10'
       case 'unknown':
         return 'Unknown'
     }
