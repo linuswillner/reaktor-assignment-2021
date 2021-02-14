@@ -1,7 +1,14 @@
 <script>
   import Item from '../components/Item.svelte'
+  import io from 'socket.io-client'
 
   export let currentView
+
+  const socket = io()
+
+  socket.on('data', items => {
+    console.log(items)
+  })
 
   // Defying convention for 'no capitalised object props'
   // for the sake of interoperability with currentView here
