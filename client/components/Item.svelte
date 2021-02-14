@@ -7,11 +7,29 @@
   export let isInStock
 
   function getStockStatus () {
-    return isInStock ? 'Yes' : 'No'
+    switch (isInStock) {
+      case true:
+        return 'Yes'
+      case false:
+        return 'No'
+      case 'low':
+        return 'Less than 10'
+      case 'unknown':
+        return 'Unknown'
+    }
   }
 
   function getStockStatusClass () {
-    return isInStock ? 'in-stock' : 'out-of-stock'
+    switch (isInStock) {
+      case true:
+        return 'in-stock'
+      case false:
+        return 'out-of-stock'
+      case 'low':
+        return 'low-stock'
+      case 'unknown':
+        return 'unknown-stock'
+    }
   }
 </script>
 
@@ -54,6 +72,14 @@
 
   span.out-of-stock {
     background-color: #ff0000;
+  }
+
+  span.low-stock {
+    background-color: #ff9100;
+  }
+
+  span.unknown-stock {
+    background-color: #969696;
   }
 
   .badge.color:not(:last-child) {
