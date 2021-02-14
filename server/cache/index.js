@@ -9,6 +9,9 @@ const cache = new Cache({
   deleteOnExpire: false
 })
 
+// Trigger update on first load
+updateCache()
+
 cache.on('set', (key, value) => {
   dispatcher.emit('cache_update_available', {
     category: key,
