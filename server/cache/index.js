@@ -9,7 +9,7 @@ const cache = new Cache({
   deleteOnExpire: false
 })
 
-let cacheIsUpdating = true
+let cacheIsUpdating = false
 
 // Trigger update on first load
 try {
