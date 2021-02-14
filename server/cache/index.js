@@ -10,7 +10,12 @@ const cache = new Cache({
 })
 
 // Trigger update on first load
-updateCache(cache)
+try {
+  updateCache(cache)
+} catch (err) {
+  logger.error(`Initial cache update failed: ${err.stack}`)
+  dispatcher.emit('cache_update_error')
+}
 
 cache.on('set', (key, value) => {
   dispatcher.emit('cache_update_available', { category: key, data: value })
@@ -18,7 +23,13 @@ cache.on('set', (key, value) => {
 
 cache.on('expired', () => {
   dispatcher.emit('cache_expired')
-  updateCache()
+
+  try {
+    updateCache(cache)
+  } catch (err) {
+    logger.error(`Cache update failed: ${err.stack}`)
+    dispatcher.emit('cache_update_error')
+  }
 })
 
 function getAll () {
