@@ -9,6 +9,8 @@ const cache = new Cache({
   deleteOnExpire: false
 })
 
+let cacheIsUpdating = true
+
 // Trigger update on first load
 try {
   updateCache(cache)
@@ -21,14 +23,22 @@ cache.on('set', (key, value) => {
   dispatcher.emit('cache_update_available', { category: key, data: value })
 })
 
-cache.on('expired', () => {
-  dispatcher.emit('cache_expired')
+cache.on('expired', async () => {
+  if (!cacheIsUpdating) {
+    cacheIsUpdating = true
 
-  try {
-    updateCache(cache)
-  } catch (err) {
-    logger.error(`Cache update failed: ${err.stack}`)
-    dispatcher.emit('cache_update_error')
+    dispatcher.emit('cache_expired')
+
+    try {
+      await updateCache(cache)
+    } catch (err) {
+      logger.error(`Cache update failed: ${err.stack}`)
+      dispatcher.emit('cache_update_error')
+    }
+
+    dispatcher.emit('cache_update_finished')
+
+    cacheIsUpdating = false
   }
 })
 

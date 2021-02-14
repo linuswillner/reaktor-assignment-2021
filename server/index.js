@@ -2,7 +2,9 @@ require('./utils/logger') // Initiate global logger
 
 const http = require('http')
 const express = require('express')
-const { registerIOEvents } = require('./ws')
+const dispatcher = require('./utils/dispatcher')
+const cache = require('./cache')
+const stripTypes = require('./cache/updater/formatters/stripTypes')
 
 const app = express()
 const server = http.createServer(app)
@@ -15,7 +17,36 @@ app.use(require('helmet')())
 
 app.use(express.static('public'))
 
-registerIOEvents(io)
+io.on('connection', socket => {
+  logger.debug(`Socket ${socket.id} connected.`)
+
+  // Send all the data downstream on first connect
+  socket.emit('cache_update', cache.getAll())
+
+  const events = {
+    cache_update_available: ({ category, data }) => {
+      logger.debug('Sending new cached data to client.')
+      socket.emit('cache_update_partial', { category, data: stripTypes(data) }) // Strip types before sendoff
+    },
+    cache_update_finished: () => socket.emit('cache_update_finished'),
+    cache_update_error: () => socket.emit('cache_update_error'),
+    cache_expired: () => socket.emit('cache_expired')
+  }
+
+  for (const event in events) {
+    const listener = events[event]
+    dispatcher.on(event, listener)
+  }
+
+  socket.on('disconnect', reason => {
+    logger.debug(`Socket ${socket.id} disconnected: ${reason}`)
+
+    for (const event in events) {
+      const listener = events[event]
+      dispatcher.removeListener(event, listener)
+    }
+  })
+})
 
 server.listen(port, '127.0.0.1', () => {
   logger.info(`Server listening on port ${port}`)
