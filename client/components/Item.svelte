@@ -54,6 +54,7 @@
   div {
     display: flex;
     flex-direction: column;
+    flex: 1 0 auto;
     border: 1px solid var(--color-secondary);
     padding: 0.5em;
     margin: 0.5em;
