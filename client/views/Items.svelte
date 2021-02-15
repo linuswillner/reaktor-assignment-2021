@@ -57,7 +57,7 @@
 
   socket.on('cache_update_finish', () => notifier.success('Cache update finished!'))
   socket.on('cache_expired', () => notifier.warning('Cache has expired and is being updated. You may be viewing outdated data for a brief moment.'))
-  socket.on('cache_update_error', () => notifier.error('Cache update failed; you may be reading outdated data.'))
+  socket.on('cache_update_error', () => notifier.danger('Cache update failed; you may be reading outdated data.'))
 </script>
 
 <div class="container">
