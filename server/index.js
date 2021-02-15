@@ -55,6 +55,6 @@ io.on('connection', socket => {
 })
 
 // Start server
-server.listen(port, '127.0.0.1', () => {
+server.listen(port, '0.0.0.0', () => {
   logger.info(`Server listening on port ${port}`)
 })
